@@ -2,11 +2,13 @@
  * HTTP Server Settings
  * (sails.config.http)
  *
- * Configuration for the underlying HTTP server in Sails.
- * Includes Swagger UI middleware at /api-docs.
+ * Includes Swagger UI middleware at /api-docs and
+ * static file serving from /assets.
  */
 
 const swaggerUi = require('swagger-ui-express');
+const path = require('path');
+const express = require('express');
 
 module.exports.http = {
 
@@ -26,15 +28,12 @@ module.exports.http = {
 
     swaggerUi: (function () {
       const swaggerSpec = require('./swagger').swagger;
+      const router = express.Router();
 
-      const router = require('express').Router();
-
-      // Serve the raw OpenAPI JSON spec
       router.get('/api-docs.json', (req, res) => {
         res.json(swaggerSpec);
       });
 
-      // Serve Swagger UI
       router.use(
         '/api-docs',
         swaggerUi.serve,
@@ -52,6 +51,8 @@ module.exports.http = {
 
       return router;
     })(),
+
+    www: express.static(path.resolve(__dirname, '..', 'assets')),
 
   },
 
