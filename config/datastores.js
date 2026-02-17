@@ -6,6 +6,9 @@
  * MongoDB: secondary datastore for append-only transaction ledger
  */
 
+const mongoUrl = process.env.MONGODB_URL || 'mongodb://localhost:27017/bottle_credits';
+const isLocalMongo = mongoUrl.includes('localhost') || mongoUrl.includes('127.0.0.1');
+
 module.exports.datastores = {
 
   default: {
@@ -15,7 +18,12 @@ module.exports.datastores = {
 
   mongoDb: {
     adapter: 'sails-mongo',
-    url: process.env.MONGODB_URL || 'mongodb://localhost:27017/bottle_credits',
+    url: mongoUrl,
+    // Cloud MongoDB (Atlas, Render, Railway) requires SSL/TLS.
+    // Automatically enable it when not connecting to localhost.
+    ...(!isLocalMongo && {
+      ssl: true,
+    }),
   },
 
 };

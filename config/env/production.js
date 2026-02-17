@@ -257,9 +257,12 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    onlyAllowOrigins: [
-      process.env.BASE_URL || 'http://localhost:1337',
-    ],
+    onlyAllowOrigins: (function() {
+      var origins = ['http://localhost:1337'];
+      if (process.env.BASE_URL) { origins.push(process.env.BASE_URL); }
+      if (process.env.RENDER_EXTERNAL_URL) { origins.push(process.env.RENDER_EXTERNAL_URL); }
+      return origins;
+    })(),
 
 
     /***************************************************************************
