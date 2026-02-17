@@ -23,8 +23,7 @@
     "sails-hook-sockets": "^3.0.0",
     "sails-mongo": "^2.1.2",
     "sails-mysql": "^3.0.1",
-    "swagger-ui-express": "^5.0.1",
-    "uuid": "^13.0.0"
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "eslint": "5.16.0"

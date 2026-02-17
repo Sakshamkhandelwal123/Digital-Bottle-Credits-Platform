@@ -5,7 +5,7 @@
  * Tokens expire after 2 minutes and are invalidated immediately after use.
  */
 
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 const QRCode = require('qrcode');
 
 module.exports = {
@@ -47,7 +47,7 @@ module.exports = {
       await QrToken.update({ wallet: walletId, used: false }).set({ used: true });
 
       // Generate new token
-      const token = uuidv4();
+      const token = crypto.randomUUID();
       const expiryMinutes = sails.config.custom.qrTokenExpiryMinutes;
       const expiresAt = Date.now() + (expiryMinutes * 60 * 1000);
 
