@@ -136,17 +136,6 @@ module.exports = {
   ***************************************************************************/
   security: {
 
-    /***************************************************************************
-    *                                                                          *
-    * If this app has CORS enabled (see `config/security.js`) with the         *
-    * `allowCredentials` setting enabled, then you should uncomment the        *
-    * `allowOrigins` whitelist below.  This sets which "origins" are allowed   *
-    * to send cross-domain (CORS) requests to your Sails app.                  *
-    *                                                                          *
-    * > Replace "https://example.com" with the URL of your production server.  *
-    * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
-    *                                                                          *
-    ***************************************************************************/
     cors: {
       // allowOrigins: [
       //   'https://example.com',
@@ -154,6 +143,9 @@ module.exports = {
     },
 
   },
+
+
+
 
 
 
@@ -265,10 +257,9 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    // onlyAllowOrigins: [
-    //   'https://example.com',
-    //   'https://staging.example.com',
-    // ],
+    onlyAllowOrigins: [
+      process.env.BASE_URL || 'http://localhost:1337',
+    ],
 
 
     /***************************************************************************

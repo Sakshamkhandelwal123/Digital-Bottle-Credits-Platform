@@ -24,6 +24,18 @@
 // Load environment variables from .env file
 require('dotenv').config();
 
+// Alias mysql → mysql2 so that sails-mysql works with MySQL 8+ (caching_sha2_password).
+// The old `mysql` package doesn't support MySQL 8's default auth plugin.
+// `mysql2` is API-compatible and handles it natively.
+var Module = require('module');
+var originalResolveFilename = Module._resolveFilename;
+Module._resolveFilename = function (request, parent) {
+  if (request === 'mysql') {
+    arguments[0] = 'mysql2';
+  }
+  return originalResolveFilename.apply(this, arguments);
+};
+
 // Ensure we're in the project directory, so cwd-relative paths work as expected
 // no matter where we actually lift from.
 // > Note: This is not required in order to lift, but it is a convenient default.
